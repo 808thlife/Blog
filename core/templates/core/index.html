@@ -1,0 +1,44 @@
+{% extends "core/layout.html" %}
+{% load static %}
+{% block header_image%} {% static "core/assets/img/home-bg.jpg" %} {% endblock header_image%}   
+{% block body %}
+     <!-- Main Content-->
+     <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <!-- Post preview-->
+                {% for post in posts %}
+               
+                <div class="post-preview">
+                    <a href="{% url "posts:post" post.id%}">
+                        <h2 class="post-title">{{post.header}}</h2>
+                    </a>
+                    <p class="post-meta">
+                        Posted 
+                        {{post.date}}
+                    </p>
+                </div>
+                <hr class="my-4" />
+                {% endfor %}
+                <!-- Pager-->
+                {% comment %} <div class="d-flex justify-content-end mb-4">
+                    <a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a>
+                </div> {% endcomment %}
+                <div class="d-flex justify-content-between mb-4">
+                    {% if posts.has_previous %}
+                        <a class="btn btn-primary text-uppercase" href="?page=1">&laquo; First</a>
+                        <a class="btn btn-primary text-uppercase" href="?page={{ posts.previous_page_number }}">Previous</a>
+                    {% endif %}
+                
+                    {% if posts.has_next %}
+                        <a class="btn btn-primary text-uppercase" href="?page={{ posts.next_page_number }}">Next</a>
+                        <a class="btn btn-primary text-uppercase" href="?page={{ posts.paginator.num_pages }}">Last &raquo;</a>
+                    {% endif %}
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
+    {% endblock body %}
+       
